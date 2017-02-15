@@ -1,13 +1,10 @@
 import React from 'react';
 import {
-  KeyboardAvoidingView,
   StyleSheet,
   View,
   TextInput,
   AppRegistry,
 } from 'react-native';
-
-const NUMBER_OF_INPUTS = 4;
 
 class App extends React.Component {
   constructor(props) {
@@ -22,31 +19,53 @@ class App extends React.Component {
   }
 
   render() {
-    let textInputs = [];
-    for (let i = 1; i <= NUMBER_OF_INPUTS; i++) {
-      textInputs.push(
-        <TextInput
-          key={i}
-          placeholder={ `${i}` }
-
-          blurOnSubmit={ i === NUMBER_OF_INPUTS ? true : false }
-          onSubmitEditing={() => {
-            if(i !== NUMBER_OF_INPUTS) {
-              this.focusNextField(i + 1)
-            }
-          }}
-          returnKeyType={ i === NUMBER_OF_INPUTS ? "done" : "next" }
-          style={styles.textInput}
-          ref={ input => {
-            this.inputs[i] = input;
-          }}
-        />
-      );
-    }
-
     return (
       <View style={styles.outerContainer}>
-        { textInputs }
+        <TextInput
+          placeholder="one"
+          blurOnSubmit={ false }
+          onSubmitEditing={() => {
+            this.focusNextField('two');
+          }}
+          returnKeyType={ "next" }
+          style={styles.textInput}
+          ref={ input => {
+            this.inputs['one'] = input;
+          }}
+        />
+        <TextInput
+          placeholder="two"
+          blurOnSubmit={ false }
+          onSubmitEditing={() => {
+            this.focusNextField('three');
+          }}
+          returnKeyType={ "next" }
+          style={styles.textInput}
+          ref={ input => {
+            this.inputs['two'] = input;
+          }}
+        />
+        <TextInput
+          placeholder="three"
+          blurOnSubmit={ false }
+          onSubmitEditing={() => {
+            this.focusNextField('four');
+          }}
+          returnKeyType={ "next" }
+          style={styles.textInput}
+          ref={ input => {
+            this.inputs['three'] = input;
+          }}
+        />
+        <TextInput
+          placeholder="four"
+          blurOnSubmit={ true }
+          returnKeyType={ "done" }
+          style={styles.textInput}
+          ref={ input => {
+            this.inputs['four'] = input;
+          }}
+        />
       </View>
     );
   };
@@ -60,6 +79,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   textInput: {
+    alignSelf: 'stretch',
     borderRadius: 5,
     borderWidth: 1,
     height: 44,
